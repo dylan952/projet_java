@@ -57,8 +57,6 @@ public class ProjetMiage extends JFrame implements ActionListener{
   public void actionPerformed(ActionEvent e) {
        String module=inf.getModule();
        String moment=inf.getTime();
-       int a=calendrier.daysInMonth;
-       String test = String.valueOf(a); 
        if (moment=="matin")
             data[0][0]=module;
        if(moment=="apresmidi")

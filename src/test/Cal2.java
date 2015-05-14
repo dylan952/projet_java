@@ -1,4 +1,4 @@
-package project;
+package test;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import project.Cal;
  
 
 public class Cal2 extends JPanel {
@@ -333,7 +334,7 @@ public class Cal2 extends JPanel {
     //c.add(new Cal(1990, 2, 15));
  
     // and beside it, the current month.
-    c.add(new Cal());
+    //c.add(new Cal());
  
     f.pack();
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
