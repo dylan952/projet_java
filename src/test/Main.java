@@ -5,8 +5,8 @@
  */
 package test;
 
-import project.Evenement;
-import project.Calendrier;
+import projetmiage.Evenement;
+import projetmiage.Calendrier;
 import java.util.*;
 
 /**

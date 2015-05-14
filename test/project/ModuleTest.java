@@ -5,7 +5,7 @@
  */
 package project;
 
-import project.GestionModule.Module;
+import projet.GestionModule.Module;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
