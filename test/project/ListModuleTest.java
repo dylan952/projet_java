@@ -5,8 +5,8 @@
  */
 package project;
 
-import project.GestionModule.ListModule;
-import project.GestionModule.Module;
+import projet.GestionModule.ListModule;
+import projet.GestionModule.Module;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package project;
+package projetmiage;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -8,14 +8,19 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
  
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
  
 
 public class Cal extends JPanel {
@@ -41,9 +46,7 @@ public class Cal extends JPanel {
   protected final int thisMonth = calendar.get(Calendar.MONTH);
  
   /** One of the buttons. We just keep its reference for getBackground(). */
-  private JButton boutonDimanche;
-    private JButton boutonSamedi;
-
+  private JButton b0;
  
   /** The month choice */
   private JComboBox monthChoice;
@@ -51,30 +54,32 @@ public class Cal extends JPanel {
   /** The year choice */
   private JComboBox yearChoice;
  
+  private JComboBox weekChoice;
+
+  private Informations info;
+  
+  protected String moment="";
+  
+  public JPanel pan=new JPanel();
+  
+  public  static int daysInMonth;
+  
+  Calendrier calendrier;
+  Tableau t=new Tableau();  
+  public static int jour;
   /**
    * Construct a Cal, starting with today.
    */
-  Cal() {
+  Cal(Calendrier calendrier) {
+      
     super();
-    setYYMMDD(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-        calendar.get(Calendar.DAY_OF_MONTH));
+    this.calendrier=calendrier;
+    setYYMMDD(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH));
     buildGUI();
     recompute();
   }
  
-  /**
-   * Construct a Cal, given the leading days and the total days
-   *
-   * @exception IllegalArgumentException
-   *                If year out of range
-   */
-  /*Cal(int year, int month, int today) {
-    super();
-    setYYMMDD(year, month, today);
-    buildGUI();
-    recompute();
-  }*/
- 
+
   private void setYYMMDD(int year, int month, int today) {
     yy = year;
     mm = month;
@@ -112,6 +117,9 @@ public class Cal extends JPanel {
     monthChoice.getAccessibleContext().setAccessibleName("Months");
     monthChoice.getAccessibleContext().setAccessibleDescription("Choose a month of the year");
     tp.add(yearChoice = new JComboBox());
+    
+  
+    
     yearChoice.setEditable(true);
     for (int i = yy - 5; i < yy + 5; i++)
         yearChoice.addItem(Integer.toString(i));
@@ -121,47 +129,92 @@ public class Cal extends JPanel {
             int i = yearChoice.getSelectedIndex();
             if (i >= 0) {
                 yy = Integer.parseInt(yearChoice.getSelectedItem().toString());
-                // System.out.println("Year=" + yy);
                 recompute();
             }
         }
     });
+        
+   // On crée un Calendar qu'on initialise à la Date souhaité :
+    GregorianCalendar gc = new GregorianCalendar();
+    gc.clear(); // on efface tous les champs
+    // Et on se positionne le 31 décembre de l'année :
+    gc.set(yy, Calendar.DECEMBER, 31);
+ 
+    // On récupère le numéro de la semaine du jour
+    int numSemaine = gc.get(Calendar.WEEK_OF_YEAR);
+    // Et tant que celui-ci est inférieur ou égal à 1
+    while (numSemaine <= 1) {
+        // On enlève un jour :
+        gc.add(Calendar.DATE, -1);
+        // Et on récupère a NOUVEAU le numéro de la semaine :
+        numSemaine = gc.get(Calendar.WEEK_OF_YEAR);
+    }
+    System.out.println("nombre semaine "+numSemaine);
+    
+    tp.add(weekChoice = new JComboBox());
+    for (int i = 1; i <= numSemaine ; i++)
+        weekChoice.addItem("Semaine "+i);
+    
+   
     add(BorderLayout.CENTER, tp);
     
     JPanel bp = new JPanel();
-    bp.setLayout(new GridLayout(7, 7));
+    bp.setLayout(new GridLayout(7,7));
     labs = new JButton[6][7]; 
 
     // first row is days
  
-    bp.add(boutonDimanche = new JButton("Dimanche"));
-    boutonDimanche.setEnabled(false);
-    bp.add(new JButton("Lundi"));
-    bp.add(new JButton("Mardi"));
-    bp.add(new JButton("Mercredi"));
-    bp.add(new JButton("Jeudi"));
-    bp.add(new JButton("Vendredi"));
-    bp.add(boutonSamedi = new JButton("Samedi"));
-    boutonSamedi.setEnabled(false);
-    
+    bp.add(b0 = new JButton("D"));
+    bp.add(new JButton("L"));
+    bp.add(new JButton("M"));
+    bp.add(new JButton("M"));
+    bp.add(new JButton("J"));
+    bp.add(new JButton("V"));
+    bp.add(new JButton("S"));
  
-    ActionListener dateSetter = new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+    ActionListener dateSetter;
+      dateSetter = new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+              
+              
+           SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+              
             String num = e.getActionCommand();
-            if (!num.equals("")) {
-                // set the current day highlighted
-                setDayActive(Integer.parseInt(num));
-                // When this becomes a Bean, you can
-                // fire some kind of DateChanged event here.
-                // Also, build a similar daySetter for day-of-week btns.
+            setDayActive(Integer.parseInt(num));
+            
+            jour = Integer.parseInt(num);
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH,Integer.parseInt(num));
+            calendar.set(Calendar.MONTH, mm);
+            calendar.set(Calendar.YEAR, yy);
+            String date = formatDate.format(calendar.getTime());
+            Evenement[] evt = calendrier.getEvenement(date);
+                       
+            if(evt[0] != null){
+                for (int i = 0; i < evt.length; i++) {
+                    Evenement evt1 = evt[i];
+                if(evt[i].getMoment().equals("matin")){
+                    t.data[0][0] = evt[i].getModule();
+                }
+                if (evt[i].getMoment().equals("apresmidi")){
+                    t.data[0][1] = evt[i].getModule();
+                }
+                }
+
             }
-        }
-    };
+            else{
+                t.data[0][0] = "";
+                t.data[0][1] = "";
+            }
+            t.tableau.repaint();
+          }
+      };
  
     // Construct all the buttons, and add them.
     for (int i = 0; i < 6; i++)
         for (int j = 0; j < 7; j++) {
             bp.add(labs[i][j] = new JButton(""));
+            labs[i][j].setEnabled(false);
             labs[i][j].addActionListener(dateSetter);
         }
     add(BorderLayout.SOUTH, bp);
@@ -176,22 +229,21 @@ public class Cal extends JPanel {
   /** Compute which days to put where, in the Cal panel */
   protected void recompute() {
     // System.out.println("Cal::recompute: " + yy + ":" + mm + ":" + dd);
+    
     if (mm < 0 || mm > 11)
-      throw new IllegalArgumentException("Month " + mm
-          + " bad, must be 0-11");
+      throw new IllegalArgumentException("Month " + mm + " bad, must be 0-11");
     clearDayActive();
-    calendar = new GregorianCalendar(yy, mm, dd);
- 
+   
     // Compute how much to leave before the first.
     // getDay() returns 0 for Sunday, which is just right.
     leadGap = new GregorianCalendar(yy, mm, 1).get(Calendar.DAY_OF_WEEK) - 1;
     //System.out.println("leadGap = " + leadGap);
  
-    int daysInMonth = dom[mm];
+    daysInMonth = dom[mm];
     System.out.println(daysInMonth);
-    if (isLeap(calendar.get(Calendar.YEAR)) && mm == 1)
+    /*if (isLeap(calendar.get(Calendar.YEAR)) & mm > 1)
         ++daysInMonth;
-    
+    */
     //System.out.println("daysInMonth = " + daysInMonth);
 
     // Afficher bouton vide jusqu'au premier jour du mois
@@ -211,26 +263,23 @@ public class Cal extends JPanel {
    //System.out.println(leadGap+1-1%7);
     for (int i = 1; i <= daysInMonth; i++) {
       JButton b = labs[(leadGap + i - 1) / 7][(leadGap + i - 1) % 7];
-      for(int j=0; j<6 ; j++){
-        if(b==labs[j][0] || b==labs[j][6] ){ //Si  c'est un samedi ou un dimanche
-            b.setEnabled(false);            // On grise le bouton du jour
-        }
-      }
-      System.out.println((leadGap+i-1)/7);
-      System.out.println((leadGap+i-1)%7);
+      //System.out.println((leadGap+i-1)/7);
+      //System.out.println((leadGap+i-1)%7);
 
       b.setText(Integer.toString(i));
+      b.setEnabled(true);
+      
+
       repaint();
     }
- 
-        
+
     // 7 days/week * up to 6 rows
-    /*for (int i = leadGap + 1 + daysInMonth; i < 6 * 7; i++) {
+    for (int i = leadGap + 1 + daysInMonth; i < 6 * 7; i++) {
       labs[(i) / 7][(i) % 7].setText("");
-    }*/
+    }
  
-    // Shade current day, only if current month
-   /* if (thisYear == yy &#038;& mm == thisMonth)
+    /* // Shade current day, only if current month
+    if (thisYear == yy && mm == thisMonth)
       setDayActive(dd); // shade the box for today*/
  
     // Say we need to be drawn on the screen
@@ -245,7 +294,7 @@ public class Cal extends JPanel {
    * _The C Programming Language_, p 37.
    */
   public boolean isLeap(int year) {
-    if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
+    if (year % 4 == 0 & year % 100 != 0 || year % 400 == 0)
         return true;
     
     return false;
@@ -267,7 +316,7 @@ public class Cal extends JPanel {
     // First un-shade the previously-selected square, if any
     if (activeDay > 0) {
       b = labs[(leadGap + activeDay - 1) / 7][(leadGap + activeDay - 1) % 7];
-      b.setBackground(boutonDimanche.getBackground());
+      b.setBackground(b0.getBackground());
       b.repaint();
       activeDay = -1;
     }
@@ -293,7 +342,7 @@ public class Cal extends JPanel {
   }
  
   /** La méthode principale*/
-  public static void main(String[] argv)
+/*  public static void main(String[] argv)
   {
     JFrame f = new JFrame("Mon Calendrier");
     Container c = f.getContentPane();
@@ -308,5 +357,5 @@ public class Cal extends JPanel {
     f.pack();
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     f.setVisible(true);
-  }
+  }*/
 }

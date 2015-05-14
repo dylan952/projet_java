@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project;
+package projetmiage;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -26,12 +26,17 @@ public class Informations extends JPanel implements ActionListener{
             ButtonGroup groupe1;
             ButtonGroup groupe2;
             JRadioButton matin;
+            JRadioButton vide;
             JRadioButton apresmidi;
             protected static String donnee="";
             JRadioButton math,francais,java,reseaux,anglais,bdd;
             public static String donnees;
+            Calendrier calendrier;
+
                     
-            public Informations(){
+            public Informations(Calendrier calendrier){
+                
+                this.calendrier=calendrier;
                 this.setLayout(new BorderLayout());
                 valider = new JButton("Valider");
                 annuler = new JButton("Annuler");
@@ -42,6 +47,7 @@ public class Informations extends JPanel implements ActionListener{
                 groupe1.add(matin);
                 groupe1.add(apresmidi);
                 
+                vide=new JRadioButton("vide");
                 math = new JRadioButton("Math");
                 francais = new JRadioButton("Francais");
                 java = new JRadioButton("Java");
@@ -49,6 +55,7 @@ public class Informations extends JPanel implements ActionListener{
                 anglais = new JRadioButton("Anglais");
                 reseaux = new JRadioButton("Reseaux");
                 groupe2 = new ButtonGroup();
+                groupe2.add(vide);
                 groupe2.add(math);
                 groupe2.add(francais);
                 groupe2.add(java);
@@ -70,6 +77,7 @@ public class Informations extends JPanel implements ActionListener{
                 JPanel b2 = new JPanel();
                 //Idem pour cette ligne
                 b2.setLayout(new BoxLayout(b2, BoxLayout.LINE_AXIS));
+                b2.add(vide);
                 b2.add(math);
                 b2.add(francais);
                 b2.add(anglais);
@@ -102,8 +110,10 @@ public class Informations extends JPanel implements ActionListener{
             public void actionPerformed(ActionEvent e) {
                 
                 if(e.getSource() == valider) {
-                  donnee=  this.getTime();
-                  donnee+=this.getModule();
+                  //donnee=  this.getTime();
+                  //donnee+=this.getModule();
+                  
+                 
                   
                   //System.out.print(donnee);
                 }
@@ -114,6 +124,9 @@ public class Informations extends JPanel implements ActionListener{
                 
             }
             
+            public String getDonnee(){
+                return donnee;
+            }
             public String getTime(){
                 String moment="";
                 if(matin.isSelected())
@@ -138,6 +151,9 @@ public class Informations extends JPanel implements ActionListener{
                     mod="reseaux";
                 if(francais.isSelected())
                     mod="francais";
+                if(vide.isSelected())
+                    mod="vide";
+                
                 return mod;
                     
             }

@@ -3,21 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package project.GestionModule;
+package projet.GestionModule;
 
+import projet.GestionModule.ListModule;
+import projet.GestionModule.Module;
 import javax.swing.*;
 import java.awt.*;
 /**
  *
  * @author D.SEVEUR-NOLEO
  */
-public class EditModule extends JFrame{
-    Module module;
-    public EditModule(Module m){
-        System.out.println(m);
-        
-        
-
+public class addModule extends JFrame{
+    public addModule(ListModule l){     
         JLabel jLabel1 = new javax.swing.JLabel();
         JLabel jLabel2 = new javax.swing.JLabel();
         JLabel jLabel3 = new javax.swing.JLabel();
@@ -25,6 +22,7 @@ public class EditModule extends JFrame{
         JSpinner spNbSeance = new javax.swing.JSpinner();
         JTextField tbNom = new javax.swing.JTextField();
         JTextField tbAbbreviation = new javax.swing.JTextField();
+        JTextField tbCouleur = new javax.swing.JTextField();
         JComboBox cbCouleur = new javax.swing.JComboBox();
         JButton btnEdit = new javax.swing.JButton();
 
@@ -32,12 +30,7 @@ public class EditModule extends JFrame{
         
         setSize(400, 300);
         
-        tbNom.setText(m.nom);
-        tbAbbreviation.setText(m.abbreviation);
-        spNbSeance.setValue(m.nbSeances);
-        
-        cbCouleur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GREEN", "YELLOW", "RED", "PINK"}));
-        cbCouleur.setSelectedItem(m.couleur);
+
         jLabel1.setText("Nom");
 
         jLabel2.setText("Abbreviation");
@@ -46,17 +39,26 @@ public class EditModule extends JFrame{
 
         jLabel4.setText("Nombre de seance");
 
-        btnEdit.setText("Edit");
+        btnEdit.setText("Ajouter Module");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to Save your Previous Note First?","Warning", JOptionPane.YES_NO_OPTION);
                 if(dialogResult == JOptionPane.YES_OPTION){
-                    m.updateModule(tbNom.getText(), tbAbbreviation.getText(), cbCouleur.getSelectedItem().toString(), (int)spNbSeance.getValue());
-                    dispose();
+                   if(verifInsert(tbNom.getText(), tbAbbreviation.getText(), cbCouleur.getSelectedItem().toString(), (int)spNbSeance.getValue()))
+                   {
+                       l.addModule(new Module(tbNom.getText(), tbAbbreviation.getText(), cbCouleur.getSelectedItem().toString(),(int)spNbSeance.getValue()));
+                       dispose();
+                   }
+                   else {
+                       JOptionPane.showMessageDialog(null, "Tous les champs ne sont pas remplis");
+                   }
                 }
             }
         });
+        
+        cbCouleur.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "GREEN", "YELLOW", "RED", "PINK"}));
 
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,8 +113,11 @@ public class EditModule extends JFrame{
         this.setVisible(true);
     }
     
-    
-    public void refreshList(){
-        
+    public boolean verifInsert(String nom,String abbreviation,String couleur,int nbSeance){
+        if(nom != "" && abbreviation != "" && couleur != "" && nbSeance > 0)
+        {
+            return true;
+        }
+        return false;
     }
 }
