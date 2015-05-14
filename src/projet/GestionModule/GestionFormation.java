@@ -166,7 +166,7 @@ public GestionFormation(Formation formation) {
             Formation formation = new Formation("L3", liste, 3);
             GestionFormation gf = new GestionFormation(formation);
             gf.setVisible(true);  
-            gf.setSize(400, 400);
+            gf.setSize(500, 500);
     }
 
 }
