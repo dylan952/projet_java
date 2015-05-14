@@ -28,8 +28,13 @@ public class ListModule {
         for (int i = 0; i < listModule.size(); i++) {
             modules[i] = getModule(i).nom;
         }
-        
         return modules;
     }
+
+    @Override
+    public String toString() {
+        return "ListModule{" + "listModule=" + listModule + '}';
+    }
     
+
 }

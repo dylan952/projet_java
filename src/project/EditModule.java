@@ -30,7 +30,7 @@ public class EditModule extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
-        setSize(450, 250);
+        setSize(400, 300);
         
         tbNom.setText(m.nom);
         tbAbbreviation.setText(m.abbreviation);

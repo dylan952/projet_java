@@ -26,7 +26,7 @@ public class addModule extends JFrame{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         
-        setSize(450, 250);
+        setSize(400, 300);
         
 
         jLabel1.setText("Nom");
