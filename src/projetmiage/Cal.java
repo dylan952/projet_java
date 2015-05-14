@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -188,16 +189,17 @@ public class Cal extends JPanel {
             calendar.set(Calendar.MONTH, mm);
             calendar.set(Calendar.YEAR, yy);
             String date = formatDate.format(calendar.getTime());
-            Evenement[] evt = calendrier.getEvenement(date);
+            ArrayList<Evenement> evt = calendrier.getEvenement(date);
                        
-            if(evt[0] != null){
-                for (int i = 0; i < evt.length; i++) {
-                    Evenement evt1 = evt[i];
-                if(evt[i].getMoment().equals("matin")){
-                    t.data[0][0] = evt[i].getModule();
+            if(!evt.isEmpty()){
+                for (int i = 0; i < evt.size(); i++) {
+                t.data[0][0] = "";
+                t.data[0][1] = "";
+                if(evt.get(i).getMoment().equals("matin")){
+                    t.data[0][0] = evt.get(i).getModule();
                 }
-                if (evt[i].getMoment().equals("apresmidi")){
-                    t.data[0][1] = evt[i].getModule();
+                if (evt.get(i).getMoment().equals("apresmidi")){
+                    t.data[0][1] = evt.get(i).getModule();
                 }
                 }
 
