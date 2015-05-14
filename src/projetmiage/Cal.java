@@ -265,8 +265,13 @@ public class Cal extends JPanel {
    //System.out.println(leadGap+1-1%7);
     for (int i = 1; i <= daysInMonth; i++) {
       JButton b = labs[(leadGap + i - 1) / 7][(leadGap + i - 1) % 7];
-      //System.out.println((leadGap+i-1)/7);
-      //System.out.println((leadGap+i-1)%7);
+      for(int j=0; j<6 ; j++){
+        if(b==labs[j][0] || b==labs[j][6] ){ //Si  c'est un samedi ou un dimanche
+            b.setEnabled(false);            // On grise le bouton du jour
+        }
+      }
+      System.out.println((leadGap+i-1)/7);
+      System.out.println((leadGap+i-1)%7);
 
       b.setText(Integer.toString(i));
       b.setEnabled(true);
