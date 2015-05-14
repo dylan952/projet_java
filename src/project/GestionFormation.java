@@ -1,119 +1,147 @@
 package project;
 
+import java.awt.Dimension;
 import javax.swing.*;
 
 
 public class GestionFormation extends JFrame {
-
-     // Variables declaration - do not modify                     
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JList jList1;
+ 
+       // Variables declaration - do not modify                     
+    private javax.swing.JButton jButtonModifierFormation;
+    private javax.swing.JButton jButtonModifierListe;
+    private javax.swing.JButton jButtonValider;
+    private javax.swing.JLabel jLabelDureeSeances;
+    private javax.swing.JLabel jLabelListeModules;
+    private javax.swing.JLabel jLabelNomFormation;
+    private javax.swing.JList jListModules;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    // End of variables declaration   
-public GestionFormation() {
-        JLabel jLabel1 = new javax.swing.JLabel();
-        JTextField jTextField1 = new javax.swing.JTextField();
-        JLabel jLabel2 = new javax.swing.JLabel();
-        JTextField jTextField2 = new javax.swing.JTextField();
-        JLabel jLabel3 = new javax.swing.JLabel();
-        JScrollPane jScrollPane1 = new javax.swing.JScrollPane();
-        JList jList1 = new javax.swing.JList();
-        JButton jButton1 = new javax.swing.JButton();
-        JButton jButton2 = new javax.swing.JButton();
+    private javax.swing.JTextField jTextFieldDureeSeances;
+    private javax.swing.JTextField jTextFieldNomFormation;
+    // End of variables declaration       
+    
+public GestionFormation(Formation formation) {
+        jLabelNomFormation = new JLabel();
+        jTextFieldNomFormation = new JTextField();
+        jLabelDureeSeances = new JLabel();
+        jTextFieldDureeSeances = new JTextField();
+        jLabelListeModules = new JLabel();
+        jScrollPane1 = new JScrollPane();
+        jListModules = new JList();
+        jButtonModifierListe = new JButton();
+        jButtonModifierFormation = new JButton();
+        jButtonValider = new JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Nom de la formation :");
+        jLabelNomFormation.setText("Nom de la formation :");
+        
 
-        jTextField1.setEditable(false);
-        jTextField1.setText("jTextField1");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
+        jTextFieldNomFormation.setEditable(false);
+        jTextFieldNomFormation.setText(formation.nom);
 
-        jLabel2.setText("Durée type des séances :");
+        jLabelDureeSeances.setText("Durée type des séances :");
+        
 
-        jTextField2.setEditable(false);
-        jTextField2.setText("jTextField2");
+        jTextFieldDureeSeances.setEditable(false);
+        jTextFieldDureeSeances.setText(String.valueOf(formation.dureeTypeSeance));
 
-        jLabel3.setText("Liste des modules :");
+        jLabelListeModules.setText("Liste des modules :");
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+        jListModules.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = formation.liste.getAllModules();
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jList1.setEnabled(false);
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListModules);
+        jListModules.setEnabled(false);
 
-        jButton1.setText("Editer");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModifierListe.setText("Modifier la liste");
+        jButtonModifierListe.setVisible(false);
+        jButtonModifierListe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                GestionModule gm = new GestionModule();
+                gm.setVisible(true);
             }
         });
 
-        jButton2.setText("Valider");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModifierFormation.setText("Modifier");
+        jButtonModifierFormation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jTextFieldNomFormation.setEditable(true);
+                jTextFieldDureeSeances.setEditable(true);
+                jListModules.setEnabled(true);
+                jButtonValider.setVisible(true);
+                jButtonModifierFormation.setVisible(false);
+                jButtonModifierListe.setVisible(true);            }
+        });
+
+        jButtonValider.setText("Valider");
+        jButtonValider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formation.updateFormation(jTextFieldNomFormation.getText(), formation.liste, Float.parseFloat( jTextFieldDureeSeances.getText()));
+                jTextFieldNomFormation.setEditable(false);
+                jTextFieldDureeSeances.setEditable(false);
+                jListModules.setEnabled(false);
+                jButtonValider.setVisible(false);
+                jButtonModifierFormation.setVisible(true);
+                jButtonModifierListe.setVisible(false);
+
             }
         });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabelListeModules)
+                                    .addComponent(jButtonModifierFormation))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(148, 148, 148)
+                                        .addComponent(jButtonModifierListe))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(jButtonValider))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabelNomFormation)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldNomFormation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jButton1)
-                        .addComponent(jLabel3)))
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
-                .addContainerGap(137, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(jLabelDureeSeances)
+                            .addGap(18, 18, 18)
+                            .addComponent(jTextFieldDureeSeances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(jLabel3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                    .addComponent(jTextFieldNomFormation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelNomFormation))
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(20, 20, 20))
+                    .addComponent(jLabelDureeSeances)
+                    .addComponent(jTextFieldDureeSeances, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelListeModules)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonModifierListe))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonValider)
+                    .addComponent(jButtonModifierFormation))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
 }
@@ -123,18 +151,22 @@ public GestionFormation() {
         // TODO add your handling code here:
     }                                           
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        jTextField1.setEditable(true);
-        jTextField2.setEditable(true);
+    private void boutonEditerActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        
     }                                        
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+    private void boutonValiderActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
     }
     
     public static void main(String args[]) {
-            GestionFormation gf = new GestionFormation();
-            gf.setVisible(true);       
+            Module module = new Module("BDD", "BD", "JAUNE", 3);
+            ListModule liste = new ListModule();
+            liste.addModule(module);
+            Formation formation = new Formation("L3", liste, 3);
+            GestionFormation gf = new GestionFormation(formation);
+            gf.setVisible(true);  
+            gf.setSize(400, 400);
     }
 
 }
