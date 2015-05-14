@@ -1,4 +1,4 @@
-package projet.GestionModule;
+package projetmiage.GestionModule;
 
 public class Formation {
     String nom ;

@@ -1,4 +1,4 @@
-package projet.GestionModule;
+package projetmiage.GestionModule;
 
 import java.util.ArrayList;
 
