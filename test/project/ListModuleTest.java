@@ -5,8 +5,8 @@
  */
 package project;
 
-import projet.GestionModule.ListModule;
-import projet.GestionModule.Module;
+import projetmiage.GestionModule.ListModule;
+import projetmiage.GestionModule.Module;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,7 +48,6 @@ public class ListModuleTest {
         Module m = new Module("TEST", "TT", "RED", 10);
         ListModule instance = new ListModule();
         instance.addModule(m);
-        assertEquals(expResult, result);
     }
 
     /**
@@ -63,7 +62,6 @@ public class ListModuleTest {
         Module result = instance.getModule(index);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.")²;
     }
 
     /**
