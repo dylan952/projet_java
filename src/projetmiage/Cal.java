@@ -192,17 +192,17 @@ public class Cal extends JPanel {
             ArrayList<Evenement> evt = calendrier.getEvenement(date);
                        
             if(!evt.isEmpty()){
-                for (int i = 0; i < evt.size(); i++) {
                 t.data[0][0] = "";
                 t.data[0][1] = "";
-                if(evt.get(i).getMoment().equals("matin")){
-                    t.data[0][0] = evt.get(i).getModule();
+                System.out.println(evt);
+                for (int i = 0; i < evt.size(); i++) {
+                    if(evt.get(i).getMoment().equals("matin")){
+                        t.data[0][0] = evt.get(i).getModule();
+                    }
+                    if (evt.get(i).getMoment().equals("apresmidi")){
+                        t.data[0][1] = evt.get(i).getModule();
+                    }
                 }
-                if (evt.get(i).getMoment().equals("apresmidi")){
-                    t.data[0][1] = evt.get(i).getModule();
-                }
-                }
-
             }
             else{
                 t.data[0][0] = "";
@@ -253,6 +253,7 @@ public class Cal extends JPanel {
     for (int i = 0; i < 6; i++)
         for (int j = 0; j < 7; j++) {
             labs[i][j].setText("");
+            labs[i][j].setEnabled(false);
             
         }
     
@@ -270,8 +271,8 @@ public class Cal extends JPanel {
             b.setEnabled(false);            // On grise le bouton du jour
         }
       }
-      System.out.println((leadGap+i-1)/7);
-      System.out.println((leadGap+i-1)%7);
+      //System.out.println((leadGap+i-1)/7);
+      //System.out.println((leadGap+i-1)%7);
 
       b.setText(Integer.toString(i));
       b.setEnabled(true);

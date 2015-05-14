@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package projetmiage;
+import java.io.Serializable;
 import java.util.Date;
 /**
  *
  * @author Seif
  */
-public class Evenement {
+public class Evenement implements Serializable{
+    private  static  final  long serialVersionUID =  95200L;
+
     
     private final String date;
     private final String moment;
@@ -35,6 +38,11 @@ public class Evenement {
 
     public String getModule() {
         return module;
+    }
+
+    @Override
+    public String toString() {
+        return "Evenement{" + "date=" + date + ", moment=" + moment + ", module=" + module + '}';
     }
     
 

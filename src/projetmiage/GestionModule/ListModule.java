@@ -3,7 +3,7 @@ package projetmiage.GestionModule;
 import java.util.ArrayList;
 
 public class ListModule {
-    ArrayList listModule = new ArrayList<Module>();
+    ArrayList<Module> listModule = new ArrayList<Module>();
     
     public void addModule(Module m){
         listModule.add(m);

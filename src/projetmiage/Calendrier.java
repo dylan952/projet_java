@@ -4,12 +4,15 @@
  * and open the template in the editor.
  */
 package projetmiage;
+import java.io.Serializable;
 import java.util.*;
 /**
  *
  * @author Seif
  */
-public class Calendrier {
+public class Calendrier implements Serializable{
+    
+    private  static  final  long serialVersionUID =  95200L;
     
     private final ArrayList<Evenement> evenements = new ArrayList<>();
     
@@ -17,14 +20,19 @@ public class Calendrier {
         return evenements;
     }
     
-    public Evenement[] getEvenement(String d){
-        Evenement[] result = new Evenement[2];
+    public ArrayList<Evenement> getEvenement(String d){
+        ArrayList<Evenement> result = new ArrayList<>();
         for (int i = 0; i < evenements.size(); i++) {
             if(evenements.get(i).getDate().equals(d)){
-                result[i] = evenements.get(i);
+                result.add(evenements.get(i));
             }
         }
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Calendrier{" + "evenements=" + evenements + '}';
     }
     
 }

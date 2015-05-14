@@ -1,4 +1,4 @@
-package Accueil;
+package projetmiage.Accueil;
 import java.awt.*;
 import javax.swing.*;
 import projetmiage.*;
@@ -24,6 +24,7 @@ public class Accueil extends JFrame {
     this.getContentPane().add(jButtonQuitter, BorderLayout.SOUTH);
     
     jButtonCreerPlanning.addActionListener(new java.awt.event.ActionListener() {
+        private DeserializationCalendrier deserialize;
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProjetMiage projet = new ProjetMiage();
                 projet.setSize(1000,600);
