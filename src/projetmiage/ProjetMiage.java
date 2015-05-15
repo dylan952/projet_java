@@ -46,8 +46,8 @@ public class ProjetMiage extends JFrame implements ActionListener{
     //Sinon les titres des colonnes ne s'afficheront pas !
     
     public ProjetMiage(){
-        if (deserialize.getDeserilizedCalendrier() != null){
-            calendr = deserialize.getDeserilizedCalendrier();
+        if (deserialize.getDeserializedCalendrier() != null){
+            calendr = deserialize.getDeserializedCalendrier();
             inf = new Informations(calendr);
             calendrier = new Cal(calendr);
             table= calendrier.t;
@@ -59,8 +59,27 @@ public class ProjetMiage extends JFrame implements ActionListener{
             calendrier = new Cal(calendr);
             table= calendrier.t;
         }
-      
-    this.setLocationRelativeTo(null);
+        build();
+  }   
+    
+        public ProjetMiage(Calendrier c){
+        if (c != null){
+            calendr = c;
+            inf = new Informations(calendr);
+            calendrier = new Cal(calendr);
+            table= calendrier.t;
+        }
+        else
+        {
+            calendr = new Calendrier();
+            inf=new Informations(calendr);
+            calendrier = new Cal(calendr);
+            table= calendrier.t;
+        }
+      build();
+  }   
+        public void build(){
+                this.setLocationRelativeTo(null);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setTitle("Planning");
     this.setSize(550, 1000);
@@ -82,8 +101,8 @@ public class ProjetMiage extends JFrame implements ActionListener{
     this.getContentPane().add(inf,BorderLayout.SOUTH);
     inf.valider.addActionListener(this);
     table.tableau.setBackground(Color.white);
-   
-  }   
+        }
+
     
     
   

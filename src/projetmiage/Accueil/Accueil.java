@@ -24,7 +24,7 @@ public class Accueil extends JFrame {
     this.getContentPane().add(jButtonQuitter, BorderLayout.SOUTH);
     
     jButtonCreerPlanning.addActionListener(new java.awt.event.ActionListener() {
-        private DeserializationCalendrier deserialize;
+        
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ProjetMiage projet = new ProjetMiage();
                 projet.setSize(1000,600);
@@ -35,6 +35,9 @@ public class Accueil extends JFrame {
         });
     
     jButtonOuvrirPlanning.addActionListener(new java.awt.event.ActionListener() {
+        private DeserializationCalendrier deserialize = new DeserializationCalendrier();
+        private Calendrier c = null;
+        
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JFileChooser choixFichier = new JFileChooser("./");
                 choixFichier.setDialogTitle("Choix du planning à ouvrir");
@@ -44,10 +47,15 @@ public class Accueil extends JFrame {
  
     if (choixFichier.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
         int index = -1;
-             String MonFichier = (choixFichier.getSelectedFile().getName() != null) ? ((index = choixFichier.getSelectedFile().getName().lastIndexOf(".")) == -1) ? choixFichier.getSelectedFile().getName() : choixFichier.getSelectedFile().getName().substring(0,choixFichier.getSelectedFile().getName().lastIndexOf('.')) : "";
-            }
-            }
-        });
+            System.out.println(choixFichier.getSelectedFile().toString());
+            c = deserialize.getDeserializedCalendrier();
+            ProjetMiage projet = new ProjetMiage();
+                projet.setSize(1000,600);
+                projet.setLocationRelativeTo(null);
+                projet.setVisible(true);
+      }
+    }
+});
     
     jButtonGererFormation.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
