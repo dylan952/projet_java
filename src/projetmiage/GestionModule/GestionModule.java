@@ -107,9 +107,5 @@ public class GestionModule extends JFrame{
                 .addContainerGap(150, Short.MAX_VALUE))
         );
     }
-    
-    public static void main(String args[]) {
-            GestionModule gm = new GestionModule();
-            gm.setVisible(true);       
-    }
+   
 }

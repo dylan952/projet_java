@@ -5,13 +5,14 @@
  */
 package projetmiage.GestionModule;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 /**
  *
  * @author D.SEVEUR-NOLEO
  */
-public class Module {
+public class Module implements Serializable{
     String nom, abbreviation, couleur;
     int nbSeances;
     

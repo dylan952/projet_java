@@ -1,6 +1,8 @@
 package projetmiage.GestionModule;
 
-public class Formation {
+import java.io.Serializable;
+
+public class Formation implements Serializable{
     String nom ;
     ListModule liste ;
     float dureeTypeSeance ;

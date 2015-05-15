@@ -5,25 +5,12 @@
  */
 package projetmiage;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.util.*;
 import javax.swing.*;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
@@ -34,7 +21,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  //CTRL + SHIFT + O pour générer les imports
 public class ProjetMiage extends JFrame implements ActionListener{
    static DeserializationCalendrier deserialize = new DeserializationCalendrier();
-   SerializationCalendrier serialize = new SerializationCalendrier();
+   Serialization serialize = new Serialization();
     
     Calendrier calendr;
     Informations inf;

@@ -1,8 +1,9 @@
 package projetmiage.GestionModule;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ListModule {
+public class ListModule implements Serializable{
     ArrayList<Module> listModule = new ArrayList<Module>();
     
     public void addModule(Module m){

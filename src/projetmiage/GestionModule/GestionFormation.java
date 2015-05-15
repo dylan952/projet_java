@@ -157,6 +157,7 @@ public GestionFormation(Formation formation) {
 
     private void boutonValiderActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
+        
     }
     
     public static void main(String args[]) {
@@ -168,6 +169,6 @@ public GestionFormation(Formation formation) {
             gf.setVisible(true);  
             gf.setSize(400, 400);
     }
-
+    
 }
 

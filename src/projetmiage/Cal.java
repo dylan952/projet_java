@@ -68,6 +68,8 @@ public class Cal extends JPanel {
   Calendrier calendrier;
   Tableau t=new Tableau();  
   public static int jour;
+  
+  private int yyDebut;
   /**
    * Construct a Cal, starting with today.
    */
@@ -85,6 +87,7 @@ public class Cal extends JPanel {
     yy = year;
     mm = month;
     dd = today;
+    yyDebut = year;
   }
  
   String[] months = { "Janvier", "Fevrier", "Mars", "Avril", "Mai", "Juin",
@@ -102,17 +105,24 @@ public class Cal extends JPanel {
  
     JPanel tp = new JPanel();
     tp.add(monthChoice = new JComboBox());
-    for (int i = 0; i < months.length; i++)
+    for (int i = 8; i < months.length; i++)
         monthChoice.addItem(months[i]);
     monthChoice.setSelectedItem(months[mm]);
     monthChoice.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent ae) {
-            int i = monthChoice.getSelectedIndex();
-            if (i >= 0) {
-                mm = i;
-                // System.out.println("Month=" + mm);
-                recompute();
+            try {
+                            String mois = monthChoice.getSelectedItem().toString();
+            for (int i = 0; i < months.length; i++) {
+                if(months[i] == mois){
+                    mm = i;
+                    recompute();
+                }
             }
+            } catch (Exception e) {
+            }
+            
+
+            
         }
     });
     monthChoice.getAccessibleContext().setAccessibleName("Months");
@@ -122,13 +132,26 @@ public class Cal extends JPanel {
   
     
     yearChoice.setEditable(true);
-    for (int i = yy - 5; i < yy + 5; i++)
+    for (int i = yy; i < yy + 2; i++){
         yearChoice.addItem(Integer.toString(i));
+    }
     yearChoice.setSelectedItem(Integer.toString(yy));
     yearChoice.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent ae) {
-            int i = yearChoice.getSelectedIndex();
-            if (i >= 0) {
+            int year = Integer.parseInt(yearChoice.getSelectedItem().toString());
+            if (year == yyDebut) {
+                monthChoice.removeAllItems();
+                for (int i = 8; i < months.length; i++){
+                        monthChoice.addItem(months[i]);
+                }
+                yy = Integer.parseInt(yearChoice.getSelectedItem().toString());
+                recompute();
+            }
+            else {
+                monthChoice.removeAllItems();
+                for (int i = 0; i < 8; i++){
+                        monthChoice.addItem(months[i]);
+                }
                 yy = Integer.parseInt(yearChoice.getSelectedItem().toString());
                 recompute();
             }
@@ -242,10 +265,9 @@ public class Cal extends JPanel {
     //System.out.println("leadGap = " + leadGap);
  
     daysInMonth = dom[mm];
-    System.out.println(daysInMonth);
-    /*if (isLeap(calendar.get(Calendar.YEAR)) & mm > 1)
+    if (isLeap(yy) & mm == 1)
         ++daysInMonth;
-    */
+    
     //System.out.println("daysInMonth = " + daysInMonth);
 
     // Afficher bouton vide jusqu'au premier jour du mois
