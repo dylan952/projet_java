@@ -67,7 +67,7 @@ public class ProjetMiage extends JFrame implements ActionListener{
   }   
         public void build(){
                 this.setLocationRelativeTo(null);
-    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.setTitle("Planning");
     this.setSize(550, 1000);
     this.getContentPane().add(new JScrollPane(table.tableau),BorderLayout.CENTER);
@@ -88,6 +88,7 @@ public class ProjetMiage extends JFrame implements ActionListener{
     this.getContentPane().add(inf,BorderLayout.SOUTH);
     inf.valider.addActionListener(this);
     table.tableau.setBackground(Color.white);
+    
         }
 
     
@@ -109,9 +110,9 @@ public class ProjetMiage extends JFrame implements ActionListener{
        }
        if(moment=="apresmidi"){
            if(module=="vide")
-               table.data[0][1]="";
+               table.data[1][0]="";
            else
-               table.data[0][1]=module;
+               table.data[1][0]=module;
        }
         table.tableau.repaint();
                
@@ -145,7 +146,7 @@ public class ProjetMiage extends JFrame implements ActionListener{
     fen.setLocation(0, 0);
     fen.pack();
     //fen.setData();
-    fen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    fen.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
   }   
 
     

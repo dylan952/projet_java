@@ -13,17 +13,11 @@ import javax.swing.*;
  * @author D.SEVEUR-NOLEO
  */
 public class GestionModule extends JFrame{
-    public GestionModule(){
+    public GestionModule(ListModule L){
         System.out.println(Color.getColor("yellow"));
         
         
-    ListModule L = new ListModule();
-    Module m1 = new Module("BASE DE DONNEE","BD","BLUE",5);
-    Module m2 = new Module("JAVA","JV","RED",5);
-    Module m3 = new Module("MATH","MH","YELLOW",5);
-    L.addModule(m1);
-    L.addModule(m2);
-    L.addModule(m3);
+    ListModule list = L;
     
         setSize(400, 250);
     
@@ -32,10 +26,10 @@ public class GestionModule extends JFrame{
         JButton btnEditModule = new javax.swing.JButton();
         JButton btnAddModule = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         listModule.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = L.getAllModules();
+            String[] strings = list.getAllModules();
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
@@ -45,12 +39,12 @@ public class GestionModule extends JFrame{
         btnEditModule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 if(listModule.getSelectedIndex() != -1){
-                    EditModule edit = new EditModule(L.getModule(listModule.getSelectedValue().toString()));
+                    EditModule edit = new EditModule(list.getModule(listModule.getSelectedValue().toString()));
                     edit.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                             listModule.setModel(new javax.swing.AbstractListModel() {
-                            String[] strings = L.getAllModules();
+                            String[] strings = list.getAllModules();
                             public int getSize() { return strings.length; }
                             public Object getElementAt(int i) { return strings[i]; }
                             });
@@ -64,13 +58,13 @@ public class GestionModule extends JFrame{
         btnAddModule.setText("Add Module");
         btnAddModule.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    addModule add = new addModule(L);
+                    addModule add = new addModule(list);
                    
                     add.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosed(java.awt.event.WindowEvent windowEvent) {
                             listModule.setModel(new javax.swing.AbstractListModel() {
-                            String[] strings = L.getAllModules();
+                            String[] strings = list.getAllModules();
                             public int getSize() { return strings.length; }
                             public Object getElementAt(int i) { return strings[i]; }
                             });

@@ -2,6 +2,8 @@ package projetmiage.GestionModule;
 
 import java.awt.Dimension;
 import javax.swing.*;
+import projetmiage.DeserializationCalendrier;
+import projetmiage.Serialization;
 
 
 public class GestionFormation extends JFrame {
@@ -18,8 +20,11 @@ public class GestionFormation extends JFrame {
     private javax.swing.JTextField jTextFieldDureeSeances;
     private javax.swing.JTextField jTextFieldNomFormation;
     // End of variables declaration       
-    
-public GestionFormation(Formation formation) {
+    private DeserializationCalendrier deserialize = new DeserializationCalendrier();
+    private Serialization serialize = new Serialization();
+    Formation formation = null;
+    public GestionFormation(Formation f) {  
+        formation = f;
         jLabelNomFormation = new JLabel();
         jTextFieldNomFormation = new JTextField();
         jLabelDureeSeances = new JLabel();
@@ -31,7 +36,7 @@ public GestionFormation(Formation formation) {
         jButtonModifierFormation = new JButton();
         jButtonValider = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelNomFormation.setText("Nom de la formation :");
         
@@ -59,8 +64,18 @@ public GestionFormation(Formation formation) {
         jButtonModifierListe.setVisible(false);
         jButtonModifierListe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                GestionModule gm = new GestionModule();
+                GestionModule gm = new GestionModule(formation.liste);
                 gm.setVisible(true);
+                gm.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                            jListModules.setModel(new javax.swing.AbstractListModel() {
+                            String[] strings = formation.liste.getAllModules();
+                            public int getSize() { return strings.length; }
+                            public Object getElementAt(int i) { return strings[i]; }
+                            });
+                    }
+                });
             }
         });
 
@@ -79,6 +94,7 @@ public GestionFormation(Formation formation) {
         jButtonValider.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formation.updateFormation(jTextFieldNomFormation.getText(), formation.liste, Float.parseFloat( jTextFieldDureeSeances.getText()));
+                serialize.serializeFormation(formation);
                 jTextFieldNomFormation.setEditable(false);
                 jTextFieldDureeSeances.setEditable(false);
                 jListModules.setEnabled(false);
@@ -160,15 +176,6 @@ public GestionFormation(Formation formation) {
         
     }
     
-    public static void main(String args[]) {
-            Module module = new Module("BDD", "BD", "JAUNE", 3);
-            ListModule liste = new ListModule();
-            liste.addModule(module);
-            Formation formation = new Formation("L3", liste, 3);
-            GestionFormation gf = new GestionFormation(formation);
-            gf.setVisible(true);  
-            gf.setSize(400, 400);
-    }
     
 }
 

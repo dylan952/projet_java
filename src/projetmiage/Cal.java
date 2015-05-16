@@ -216,20 +216,20 @@ public class Cal extends JPanel {
                        
             if(!evt.isEmpty()){
                 t.data[0][0] = "";
-                t.data[0][1] = "";
+                t.data[1][0] = "";
                 System.out.println(evt);
                 for (int i = 0; i < evt.size(); i++) {
                     if(evt.get(i).getMoment().equals("matin")){
                         t.data[0][0] = evt.get(i).getModule();
                     }
                     if (evt.get(i).getMoment().equals("apresmidi")){
-                        t.data[0][1] = evt.get(i).getModule();
+                        t.data[1][0] = evt.get(i).getModule();
                     }
                 }
             }
             else{
                 t.data[0][0] = "";
-                t.data[0][1] = "";
+                t.data[1][0] = "";
             }
             t.tableau.repaint();
           }

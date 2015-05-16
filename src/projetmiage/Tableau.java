@@ -13,18 +13,11 @@ import javax.swing.JTable;
  */
 public class Tableau {
     
-     Object[][] data = {
-      
-      {"", ""}
-      
-    };
+     Object[][] data = {{"a"},{"T"}};
      
     //Les titres des colonnes
-    String title[] = {"Matiné", "Soir"};
+    String title[] = {"Jour"};
     JTable tableau = new JTable(data, title);
     
-public void setData(int i, int j,String s){
-        this.data[i][j]=s;
-    }
-    
+
 }
